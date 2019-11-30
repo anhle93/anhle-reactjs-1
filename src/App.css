@@ -1,4 +1,8 @@
 .App {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr;
+  grid-gap: 10px;
   text-align: center;
 }
 
@@ -19,4 +23,9 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.product-item {
+  border: #282c34 1px solid;
+  margin-bottom: 5px;
 }

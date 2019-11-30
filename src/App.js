@@ -3,15 +3,28 @@ import React from 'react';
 import ProductImageDef from './ProductImage';
 import ProductInfoDef from './ProductInfo';
 import './App.css';
+import datajson from './data.json';
 
 function App() {
+  const data = datajson.data;
   return (
     <div className="App">
-      <div>
-        <ProductImageDef src='https://vntrip.cdn.vccloud.vn/cam-nang/wp-content/uploads/2017/06/1dl.jpg' saleText='sale' />
-        <ProductInfoDef type='FURNITURE' name='Minimal Deco Furniture' finalprice='119$' price='230$' />
-      </div>
+      {data.map(ele => (
+        <div key={ele.product_id} className="product-item">
+          <ProductImageDef 
+            src={ele.img_url}
+            saleText={ele.promotion_percent_upto}
+          />
+          <ProductInfoDef 
+            type={ele.shop_name} 
+            name={ele.name} 
+            finalprice={ele.final_price} 
+            price={ele.price}
+            />
+        </div>
+      ))}
     </div>
+    
   );
 }
 

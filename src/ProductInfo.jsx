@@ -10,8 +10,8 @@ function ProductInfo(props) {
                 <a href="/">{props.name}</a>
             </h4>
             <div>
-                <span>{props.finalprice}</span>
-                <span>{props.price}</span>
+                <p>{props.finalprice}</p>
+                <p>{props.price}</p>
             </div>
         </div>
     );
