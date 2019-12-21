@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import firebase from 'firebase';
 import Clock from '../Exts/Clock';
 import {ThemeContext} from '../../ThemeContext';
+import { Link } from 'react-router-dom';
 
 function Header(props) {
     const context = useContext(ThemeContext);
@@ -56,22 +57,28 @@ function Header(props) {
                                 <nav id="mobile-menu" style={{ display: "block" }}>
                                     <ul>
                                         <li>
-                                            <a href="./index.html">Home</a>
+                                            <Link to="/">Home</Link>
+                                            {/* <a href="./index.html">Home</a> */}
                                         </li>
                                         <li>
-                                            <a href="/">Pages</a>
+                                            <Link to="/">Pages</Link>
+                                            {/* <a href="/">Pages</a> */}
                                             <ul className="submenu">
                                                 <li>
-                                                    <a href="./detail.html">Product Detail</a>
+                                                    <Link to="/product-detail">Product Detail</Link>
+                                                    {/* <a href="./detail.html">Product Detail</a> */}
                                                 </li>
                                                 <li>
-                                                    <a href="./login.html">login</a>
+                                                    <Link to="/login">login</Link>
+                                                    {/* <a href="./login.html">login</a> */}
                                                 </li>
                                                 <li>
-                                                    <a href="./register.html">Register</a>
+                                                    <Link to="/register">Register</Link>
+                                                    {/* <a href="./register.html">Register</a> */}
                                                 </li>
                                                 <li>
-                                                    <a href="./cart.html">Shoping Cart</a>
+                                                    <Link to="/cart">Shoping Cart</Link>
+                                                    {/* <a href="./cart.html">Shoping Cart</a> */}
                                                 </li>
                                             </ul>
                                         </li>
@@ -88,7 +95,7 @@ function Header(props) {
                                     {
                                         userInfo && userInfo.email
                                             ? <li className="login-btn"><a onClick={signOut} href="/"><i className="fas fa-sign-out-alt"></i></a></li>
-                                            : <li className="login-btn"><a href="/"><i className="far fa-user"></i></a></li>
+                                            : <li className="login-btn"><Link to="/login"><i className="far fa-user"></i></Link></li>
                                     }
                                     
                                     <li className="d-shop-cart"><a href="/"><i className="fas fa-shopping-cart"></i>

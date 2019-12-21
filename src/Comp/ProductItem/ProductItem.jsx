@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart }) { 
+function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart, product_id }) { 
 
     function onClickAddToCart() {
         onClickCart({ name, final_price, price, img_url});
@@ -18,9 +19,12 @@ function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart
                         <a title="Shopping Cart" onClick={onClickAddToCart}>
                             <i className="fas fa-shopping-cart" />
                         </a>
-                        <a title="Quick View" >
+                        <Link to={`/product-detail/${product_id}`} title="Quick View">
                             <i className="fas fa-search" />
-                        </a>
+                        </Link>
+                        {/* <a title="Quick View" >
+                            <i className="fas fa-search" />
+                        </a> */}
                     </div>
                 </div>
                 <div className="product-content pr-0">

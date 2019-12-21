@@ -2,6 +2,7 @@ import React from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 
 function ProductList(props) {
+    console.log(props.list);
     return (
         <div className="col-xl-9 col-lg-8">
             {/* tab filter */}
