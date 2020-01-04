@@ -5,15 +5,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Shop!</title>
+  <title>React App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2196F3">
 
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="manifest" href="./manifest.json">
   <link rel="shortcut icon" type="image/x-icon" href="./assets/logo_shop.png">
   <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700&display=swap&subset=vietnamese"
     rel="stylesheet">
 
+  <link rel="apple-touch-icon" href="logo512.png">
   <!-- Place favicon.ico in the root directory -->
 
   <!-- CSS here -->
@@ -23,11 +25,59 @@
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/assets/responsive.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+  
+    .navbar {
+      background-color: #4169e1;
+    }
+  
+    .navbar h3 {
+      display: inline-block;
+      text-align: left;
+      padding: 10px;
+      color: black;
+      text-decoration: none;
+    }
+  
+    .navbar a {
+      display: inline-block;
+      padding: 10px;
+      color: #fff;
+      text-decoration: none;
+    }
+  
+    .page-info {
+      padding: 10px;
+    }
+  
+    .Current {
+      color: #2e8b57;
+    }
+  
+    .Completed {
+      color: #ff6347;
+      text-decoration: line-through;
+    }
+  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
+  <div id="root">
+    <div class="navbar">
+      <h3>Task Manager</h3>
+      <a href="/">Current Tasks</a>
+      <a href="/completed">Completed Tasks</a>
+    </div>
+    <p class="page-info">
+      Loading...
+    </p>
+  </div>
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -38,6 +88,21 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('worker.js').then(function (registration) {
+            console.log('Worker registration successful', registration.scope);
+          }, function (err) {
+            console.log('Worker registration failed', err);
+          }).catch(function (err) {
+            console.log(err);
+          });
+        });
+      } else {
+        console.log('Service Worker is not supported by browser.');
+      }
+    </script>
 </body>
 
 </html>

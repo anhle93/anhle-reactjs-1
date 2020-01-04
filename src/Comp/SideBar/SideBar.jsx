@@ -2,7 +2,7 @@ import React from 'react';
 
 function SideBar(props, { onSortClick, onFilterData }) {
     const sortHandle = (sortType) => {
-        onSortClick(sortType);
+        props.onSortClick(sortType);
     }
 
     return (
@@ -22,6 +22,10 @@ function SideBar(props, { onSortClick, onFilterData }) {
                         <li><a onClick={() => sortHandle('sortza')} href="/">Price: Low to High</a></li>
                         <li><a onClick={() => sortHandle('filtersale')} href="/">Product: Top Sales</a></li>
                     </ul>
+                    {/* <ul className="shop-link">
+                        <li><a onClick={() => sortHandle('filtersale')} href="#">Product: Top Sales 1</a></li>
+                        <li><a onClick={() => props.filterProducts(props.products, 25)} href="#">Product: Top Sales</a></li>
+                    </ul> */}
                 </div>
                 <div className="shop-widget">
                     <h3 className="shop-title">Recent Product</h3>

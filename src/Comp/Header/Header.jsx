@@ -104,9 +104,9 @@ function Header(props) {
                                         </span></a>
                                         {props.children}
                                     </li>
-                                    <li className="search-btn">
+                                    {/* <li className="search-btn">
                                         <button onClick={switchTheme} style={{ backgroundColor: context.defaultTheme }} >{context.defaultTheme}</button>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         </div>

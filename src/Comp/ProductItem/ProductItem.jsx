@@ -36,8 +36,8 @@ function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart
                     </h4>
                     <div className="product-meta">
                         <div className="pro-price">
-                            <span>{final_price}</span>
-                            <span className="old-price">{price}</span>
+                            <span>{new Intl.NumberFormat('de-DE').format(final_price)}đ</span>
+                            <span className="old-price">{new Intl.NumberFormat('de-DE').format(price)}đ</span>
                         </div>
                     </div>
                 </div>

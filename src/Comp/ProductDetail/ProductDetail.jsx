@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import datajson from '../../data.json';
 
 function ProductDetail(props) {
+    const [tabActive, setTabActive] = useState("description")
+
     const params = useParams();
     const id = parseInt(params.id);
-    
-    const product = datajson.data.find(item => item.product_id === id);
-    console.log(product);
+    // const product = datajson.data.find(item => item.product_id === id);
 
+    useEffect(() => {
+        props.productDetail(id);
+    }, [])
+
+    const product = props.data;
+    console.log(product, product.comments);
+
+    const onClickTab = (name) => {
+        setTabActive(name)
+    }
+
+    const priceFormat = (price) => {
+        return new Intl.NumberFormat('de-DE').format(price);
+    }
+    
     return (
         <main>
             <section className="breadcrumb-area" style={{ backgroundImage: 'url("./assets/page-title.png")' }}>
@@ -32,21 +46,19 @@ function ProductDetail(props) {
                         <div className="col-xl-6 col-lg-4">
                             <div className="product-details-img mb-10">
                                 <div className="tab-content" id="myTabContentpro">
-                                    <div className="tab-pane fade show active" id="home" role="tabpanel">
-                                        <div className="product-large-img">
-                                            <img src="img/product/pro1.jpg" alt="" />
+                                    {
+                                        product.images 
+                                        ?  <div className="tab-pane fade show active" id="home" role="tabpanel">
+                                                <div className="product-large-img">
+                                                    <img src={`https://media3.scdn.vn/${product.images[0]}`} alt="" />
+                                                </div>
+                                            </div>
+                                        : <div className="tab-pane fade show active" id="home" role="tabpanel">
+                                            <div className="product-large-img">
+                                                <img src="https://media3.scdn.vn/img/product/pro1.jpg" alt="" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="tab-pane fade" id="profile" role="tabpanel">
-                                        <div className="product-large-img">
-                                            <img src="img/product/pro2.jpg" alt="" />
-                                        </div>
-                                    </div>
-                                    <div className="tab-pane fade" id="profile1" role="tabpanel">
-                                        <div className="product-large-img">
-                                            <img src="img/product/pro3.jpg" alt="" />
-                                        </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                             <div className="shop-thumb-tab mb-30">
@@ -71,8 +83,8 @@ function ProductDetail(props) {
                                 </div>
                                 <h2 className="pro-details-title mb-15">{product.name}</h2>
                                 <div className="details-price mb-20">
-                                    <span>${product.final_price}</span>
-                                    <span className="old-price">${product.price}</span>
+                                    <span>{priceFormat(product.final_price)}đ</span>
+                                    <span className="old-price">{priceFormat(product.price)}đ</span>
                                 </div>
                                 <div className="product-variant">
                                     <div className="product-desc variant-item">
@@ -108,69 +120,78 @@ function ProductDetail(props) {
                             <div className="product-review">
                                 <ul className="nav review-tab" id="myTabproduct" role="tablist">
                                     <li className="nav-item">
-                                        <a className="nav-link active" id="home-tab6" data-toggle="tab" href="/home6" role="tab" aria-controls="home" aria-selected="true">Description </a>
+                                        <a
+                                            className={`nav-link ${tabActive === "description" && "active"}`}
+                                            id="home-tab6"
+                                            data-toggle="tab"
+                                            role="tab"
+                                            aria-controls="home"
+                                            aria-selected="true"
+                                            onClick={() => onClickTab("description")}
+                                            href="#home6"
+                                        >
+                                            Description
+                                        </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" id="profile-tab6" data-toggle="tab" href="/profile6" role="tab" aria-controls="profile" aria-selected="false">Reviews (2)</a>
+                                        <a
+                                            className={`nav-link ${tabActive === "comments" && "active"}`}
+                                            id="profile-tab6"
+                                            data-toggle="tab"
+                                            role="tab"
+                                            aria-controls="profile"
+                                            aria-selected="false"
+                                            onClick={() => onClickTab("comments")}
+                                            href="#profile6"
+                                        >
+                                            Reviews ({
+                                                product.comments ? product.comments.total_count : 0
+                                            })
+                                        </a>
                                     </li>
                                 </ul>
                                 <div className="tab-content" id="myTabContent2">
-                                    <div className="tab-pane fade show active" id="home6" role="tabpanel" aria-labelledby="home-tab6">
+                                    <div
+                                        className={`tab-pane show ${tabActive === "description" && "active"}`}
+                                        id="home6"
+                                        role="tabpanel"
+                                        aria-labelledby="home-tab6"
+                                    >
                                         <div className="desc-text">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                                              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                                              occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis
-                                              unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                    illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-                                              ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                    adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+                                            <p dangerouslySetInnerHTML={{ __html: product.description }} />
                                         </div>
                                     </div>
-                                    <div className="tab-pane fade" id="profile6" role="tabpanel" aria-labelledby="profile-tab6">
+                                    <div
+                                        className={`tab-pane show ${tabActive === "comments" && "active"}`}
+                                        id="profile6"
+                                        role="tabpanel"
+                                        aria-labelledby="profile-tab6"
+                                    >
                                         <div className="desc-text review-text">
                                             <div className="product-commnets">
-                                                <div className="product-commnets-list mb-25 pb-15">
-                                                    <div className="pro-comments-img">
-                                                        <img src="img/product/comments/01.png" alt="" />
-                                                    </div>
-                                                    <div className="pro-commnets-text">
-                                                        <h4>Roger West -
-                          <span>June 5, 2018</span>
-                                                        </h4>
-                                                        <div className="pro-rating">
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                        </div>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                          incididunt
-                                                          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                          exercitation.</p>
-                                                    </div>
-                                                </div>
-                                                <div className="product-commnets-list mb-25 pb-15">
-                                                    <div className="pro-comments-img">
-                                                        <img src="img/product/comments/02.png" alt="" />
-                                                    </div>
-                                                    <div className="pro-commnets-text">
-                                                        <h4>Roger West -
-                          <span>June 5, 2018</span>
-                                                        </h4>
-                                                        <div className="pro-rating">
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                            <i className="far fa-star" />
-                                                        </div>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                                          incididunt
-                                                          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                          exercitation.</p>
-                                                    </div>
-                                                </div>
+                                                {
+                                                    product.comments ?
+                                                    product.comments.data.map(elm => {
+                                                        return (
+                                                            <div className="product-commnets-list mb-25 pb-15">
+                                                                <div className="pro-comments-img">
+                                                                    <img src={`https://media3.scdn.vn/${elm.customer_logo}`} alt="" />
+                                                                </div>
+                                                                <div className="pro-commnets-text">
+                                                                    <h4>{elm.customer_name} - <span>{elm.time}</span></h4>
+                                                                    <div className="pro-rating">
+                                                                        <i className="far fa-star" />
+                                                                        <i className="far fa-star" />
+                                                                        <i className="far fa-star" />
+                                                                        <i className="far fa-star" />
+                                                                    </div>
+                                                                    <p>{elm.data}</p>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                    : <p>EMPTY</p>
+                                                }
                                             </div>
                                             <div className="review-box mt-50">
                                                 <h4>Add a Review</h4>
@@ -406,7 +427,7 @@ function ProductDetail(props) {
                             <div className="product-wrapper">
                                 <div className="product-img mb-25">
                                     <a href="product-details.html">
-                                        <img src="img/product/pro1.jpg" alt="" />
+                                        <img src="/img/product/pro1.jpg" alt="" />
                                         <img className="secondary-img" src="img/product/pro11.jpg" alt="" />
                                     </a>
                                     <div className="product-action text-center">

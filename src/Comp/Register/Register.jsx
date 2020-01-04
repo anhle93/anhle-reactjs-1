@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import firebase from 'firebase';
 
 function Register(props) {
     const [email, setEmail] = useState('');
@@ -15,11 +14,14 @@ function Register(props) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     await firebase.auth().createUserWithEmailAndPassword(email, password);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+
+        props.registerAction(email, password);
+        console.log(props);
 
     };
     
@@ -47,6 +49,7 @@ function Register(props) {
                         <div className="col-lg-8 offset-lg-2">
                             <div className="basic-login">
                                 <h3 className="text-center mb-60">Signup From Here</h3>
+                                <p className="text-danger">{props.error}</p>
                                 <form onSubmit={onSubmit}>
                                     <label htmlFor="name">Username <span>**</span></label>
                                     <input id="name" type="text" placeholder="Enter Username or Email address..." />
@@ -55,7 +58,12 @@ function Register(props) {
                                     <label htmlFor="pass">Password <span>**</span></label>
                                     <input onChange={onChangePass} id="pass" type="password" placeholder="Enter password..." />
                                     <div className="mt-10"></div>
-                                    <button className="btn theme-btn-2 w-100">Register Now</button>
+                                    {/* <button className="btn theme-btn-2 w-100">Register Now</button> */}
+                                    {
+                                        props.load === false
+                                            ? <button className="btn theme-btn-2 w-100">Register Now</button>
+                                            : <button className="btn theme-btn-2 w-100">Registering</button>
+                                    }
                                     <div className="or-divide"><span>or</span></div>
                                     <button className="btn theme-btn w-100">login Now</button>
                                 </form>

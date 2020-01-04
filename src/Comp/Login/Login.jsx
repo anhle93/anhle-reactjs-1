@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import firebase from 'firebase';
 
 function Login(props) {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
-    const [errorMes, setErrorMesage] = useState('');
 
     const onChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -16,12 +14,14 @@ function Login(props) {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-            setErrorMesage('');
-        } catch (error) {
-            setErrorMesage(error.message);
-        }
+        // try {
+        //     await firebase.auth().signInWithEmailAndPassword(email, password);
+        //     setErrorMesage('');
+        // } catch (error) {
+        //     setErrorMesage(error.message);
+        // }
+
+        props.loginAction(email, password);
 
     };
 
@@ -49,7 +49,7 @@ function Login(props) {
                         <div className="col-lg-8 offset-lg-2">
                             <div className="basic-login">
                                 <h3 className="text-center mb-60">Login From Here</h3>
-                                <p className="text-danger">{errorMes}</p>
+                                <p className="text-danger">{props.error}</p>
                                 <form onSubmit={onSubmit}>
                                     <label htmlFor="name">Email Address <span>**</span></label>
                                     <input onChange={onChangeEmail} id="name" type="text" placeholder="Enter Username or Email address..." />
