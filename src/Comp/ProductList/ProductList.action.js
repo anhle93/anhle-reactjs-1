@@ -5,7 +5,7 @@ export const GET_PRODUCT_LIST_REQUEST = 'GET_PRODUCT_LIST_REQUEST';
 export const GET_PRODUCT_LIST_SUCCESS = 'GET_PRODUCT_LIST_SUCCESS';
 export const GET_PRODUCT_LIST_FAIL = 'GET_PRODUCT_LIST_FAIL';
 export const FILTER_PRODUCT_BY_SALE = 'FILTER_PRODUCT_BY_SALE';
-export const ORDER_PRODUCT_BY_NAME_DESC = 'ORDER_PRODUCT_BY_NAME_DESC';
+export const ORDER_PRODUCT = 'ORDER_PRODUCT';
 
 export function getProductListRequestAction() {
     return {
@@ -27,25 +27,50 @@ export function getProductListFailAction(error) {
     }
 }
 
-export function filterProducts(products, sale) {
-    console.log(sale === '' ? products : products.filter(ele => ele.promotion_percent >= sale));
-    return {
-        type: FILTER_PRODUCT_BY_SALE,
-        payload: {
-            sale: sale,
-            items: sale === '' ? products : products.filter(ele => ele.promotion_percent >= sale)
-        }
-    }
+export const filterProducts = (products, sale) => (dispatch) => {
+    return dispatch({
+            type: FILTER_PRODUCT_BY_SALE,
+            payload: {
+                sale: sale,
+                items: sale === '' ? products : products.filter(ele => ele.promotion_percent >= sale)
+            }
+        }) 
 }
 
-export function sortProducts(products, sort) {
-    return {
-        type: ORDER_PRODUCT_BY_NAME_DESC,
-        payload: {
-            sort: sort,
-            items: products
-        }
+export const sortProducts = (products, type) => (dispatch) => {
+    const _products = [...products]
+    switch (type) {
+        case 'sortnameaz':
+            _products.sort(function (a, b) {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            break;
+        case 'sortnameza':
+            _products.sort(function (a, b) {
+                var textA = a.name.toUpperCase();
+                var textB = b.name.toUpperCase();
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            });
+            break;
+        case 'sortza':
+            _products.sort((a, b) => a.final_price - b.final_price);
+            break;
+        case 'sortaz':
+            _products.sort((a, b) => b.final_price - a.final_price);
+            break;
+        default:
+            break;
     }
+
+    return dispatch({
+        type: ORDER_PRODUCT,
+        payload: {
+            type: type,
+            items: _products
+        }
+    })
 }
 
 export function productListAction(name = 'ao-so-mi-nam') {
@@ -53,7 +78,6 @@ export function productListAction(name = 'ao-so-mi-nam') {
         dispatch(getProductListRequestAction());
 
         try {
-            console.log(name)
             const dataAPI = await axios({
                 method: "GET",
                 // url: `https://mapi.sendo.vn/mob/product/cat/${name}?p=1`
@@ -69,38 +93,6 @@ export function productListAction(name = 'ao-so-mi-nam') {
             }
         } catch (error) {
             dispatch(getProductListFailAction(error))
-        }
-    }
-}
-
-export function sortProduct(products, sort) {
-    return async (dispatch) => {
-        switch (sort) {
-            case 'sortaz':
-                products.sort((a, b) => a.final_price - b.final_price);
-                break;
-            case 'sortza':
-                products.sort((a, b) => b.final_price - a.final_price);
-                break;
-            case 'sortnameaz':
-                products.sort((a, b) => {
-                    var textA = a.name.toUpperCase();
-                    var textB = b.name.toUpperCase();
-                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                })
-                break;
-            case 'sortnameza':
-                products.sort((a, b) => {
-                    var textA = a.name.toUpperCase();
-                    var textB = b.name.toUpperCase();
-                    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
-                })
-                break;
-            case 'filtersale':
-                products.filter(ele => ele.promotion_percent >= 30)
-                break;
-            default:
-                break;
         }
     }
 }

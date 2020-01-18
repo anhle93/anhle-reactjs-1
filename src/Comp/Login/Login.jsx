@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login(props) {
     const [email, setEmail] = useState('');
@@ -65,9 +66,9 @@ function Login(props) {
                                         </span>
                                     </div>
                                     <button className="btn theme-btn-2 w-100">Login Now</button>
-                                    <div className="or-divide"><span>or</span></div>
-                                    <button className="btn theme-btn w-100">Register Now</button>
                                 </form>
+                                <div className="or-divide"><span>or</span></div>
+                                <Link className="btn theme-btn w-100" to='/register'>Register Now</Link>
                             </div>
                         </div>
                     </div>

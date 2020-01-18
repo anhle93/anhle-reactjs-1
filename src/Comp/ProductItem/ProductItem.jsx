@@ -6,15 +6,15 @@ function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart
     function onClickAddToCart() {
         onClickCart({ name, final_price, price, img_url});
     }
-
+    
     return (
         <div className="col-xl-4 col-lg-6 col-md-6">
             <div className="product-wrapper mb-50">
                 <div className="product-img mb-25">
-                    <a href="/">
+                    {/* <a href="/"> */}
                         <img src={img_url} alt="" />
                         {/* <img className="secondary-img" src="./assets/pro2.jpg" alt="" /> */}
-                    </a>
+                    {/* </a> */}
                     <div className="product-action text-center">
                         <a title="Shopping Cart" onClick={onClickAddToCart}>
                             <i className="fas fa-shopping-cart" />
@@ -32,7 +32,7 @@ function ProductItem({ img_url, shop_name, name, final_price, price, onClickCart
                         <a href="/">{shop_name}</a>
                     </div>
                     <h4>
-                        <a href="/">{name}</a>
+                        <Link to={`/product-detail/${product_id}`}>{name}</Link>
                     </h4>
                     <div className="product-meta">
                         <div className="pro-price">

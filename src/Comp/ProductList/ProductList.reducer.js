@@ -3,14 +3,13 @@ import {
     GET_PRODUCT_LIST_SUCCESS, 
     GET_PRODUCT_LIST_FAIL,
     FILTER_PRODUCT_BY_SALE,
-    ORDER_PRODUCT_BY_NAME_DESC
+    ORDER_PRODUCT
 } from './ProductList.action';
 
 const initialState = {
     data: [],
     filteredItems: [],
     sale: 30,
-    filterDatas: [],
     load: false,
     fail: null
 }
@@ -26,7 +25,8 @@ export default function productListReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 load: false,
                 data: action.payload,
-                filteredItems: action.payload
+                filteredItems: action.payload,
+                sortItems: action.payload
             })
 
         case GET_PRODUCT_LIST_FAIL:
@@ -38,15 +38,15 @@ export default function productListReducer(state = initialState, action) {
         case FILTER_PRODUCT_BY_SALE:
             return Object.assign({}, state, {
                 load: false,
-                filteredItems: action.payload.data,
+                filteredItems: action.payload.items,
                 sale: action.payload.sale
             })
 
-        case ORDER_PRODUCT_BY_NAME_DESC:
+        case ORDER_PRODUCT:
             return Object.assign({}, state, {
                 load: false,
-                filterDatas: action.payload.items,
-                sort: action.payload.sort
+                filteredItems: action.payload.items,
+                type: action.payload.type
             })
 
         default:

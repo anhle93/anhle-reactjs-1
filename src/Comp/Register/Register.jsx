@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Register(props) {
     const [email, setEmail] = useState('');
@@ -51,8 +52,8 @@ function Register(props) {
                                 <h3 className="text-center mb-60">Signup From Here</h3>
                                 <p className="text-danger">{props.error}</p>
                                 <form onSubmit={onSubmit}>
-                                    <label htmlFor="name">Username <span>**</span></label>
-                                    <input id="name" type="text" placeholder="Enter Username or Email address..." />
+                                    {/* <label htmlFor="name">Username <span>**</span></label>
+                                    <input id="name" type="text" placeholder="Enter Username or Email address..." /> */}
                                     <label htmlFor="email-id">Email Address <span>**</span></label>
                                     <input onChange={onChangeEmail} id="email-id" type="text" placeholder="Enter Username or Email address..." />
                                     <label htmlFor="pass">Password <span>**</span></label>
@@ -64,9 +65,9 @@ function Register(props) {
                                             ? <button className="btn theme-btn-2 w-100">Register Now</button>
                                             : <button className="btn theme-btn-2 w-100">Registering</button>
                                     }
-                                    <div className="or-divide"><span>or</span></div>
-                                    <button className="btn theme-btn w-100">login Now</button>
                                 </form>
+                                <div className="or-divide"><span>or</span></div>
+                                <Link className="btn theme-btn w-100" to='/login'>Login Now</Link>
                             </div>
                         </div>
                     </div>

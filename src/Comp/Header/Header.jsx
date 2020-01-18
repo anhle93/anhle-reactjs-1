@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import firebase from 'firebase';
-import Clock from '../Exts/Clock';
+// import Clock from '../Exts/Clock';
 import {ThemeContext} from '../../ThemeContext';
 import { Link } from 'react-router-dom';
 
 function Header(props) {
-    const context = useContext(ThemeContext);
+    // const context = useContext(ThemeContext);
     const [userInfo, setUserInfo] = useState({});
 
     firebase.auth().onAuthStateChanged(function (user) {
@@ -20,13 +20,13 @@ function Header(props) {
         window.location.href= "/";
     }
 
-    function switchTheme() {
-        if (context.defaultTheme === 'white') {
-            context.setThemeValue('red');
-        } else {
-            context.setThemeValue('white');
-        }
-    };
+    // function switchTheme() {
+    //     if (context.defaultTheme === 'white') {
+    //         context.setThemeValue('red');
+    //     } else {
+    //         context.setThemeValue('white');
+    //     }
+    // };
 
     return (
         <header>
@@ -37,7 +37,7 @@ function Header(props) {
                             <div className="logo">
                                 <a href="/"><img src="./assets/logo_shop.png" alt="" /></a>
                             </div>
-                            <Clock></Clock>
+                            {/* <Clock></Clock> */}
 
                             <div className="category-menu">
                                 <h4>Category</h4>
@@ -64,10 +64,9 @@ function Header(props) {
                                             <Link to="/">Pages</Link>
                                             {/* <a href="/">Pages</a> */}
                                             <ul className="submenu">
-                                                <li>
+                                                {/* <li>
                                                     <Link to="/product-detail">Product Detail</Link>
-                                                    {/* <a href="./detail.html">Product Detail</a> */}
-                                                </li>
+                                                </li> */}
                                                 <li>
                                                     <Link to="/login">login</Link>
                                                     {/* <a href="./login.html">login</a> */}
@@ -100,7 +99,7 @@ function Header(props) {
                                     
                                     <li className="d-shop-cart"><a href="/"><i className="fas fa-shopping-cart"></i>
                                         <span className="cart-count">
-                                            {props.totalProduct}
+                                            { props.cartItems.length }
                                         </span></a>
                                         {props.children}
                                     </li>

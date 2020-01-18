@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import logo from './logo.svg';
-import Header from './Comp/Header/Header';
+import Header from './Comp/Header/Header.Container';
 import Footer from './Comp/Footer/Footer';
 import LoadingComp from './Comp/Loading';
-import datajson from './data.json';
 import PrivateRoute from './Comp/PrivateRoute/PrivateRoute';
 import LoginRoute from './Comp/Login/LoginRoute';
 
@@ -16,7 +15,7 @@ const ProductList = React.lazy(() => import('./Comp/ProductList/ProductList.Cont
 const ProductDetail = React.lazy(() => import('./Comp/ProductDetail/ProductDetail.Container'));
 
 // import SideBar from './Comp/SideBar/SideBar';
-const SideBar = React.lazy(() => import('./Comp/SideBar/SideBar'));
+const SideBar = React.lazy(() => import('./Comp/SideBar/SideBar.Container'));
 // import Search from './Comp/SideBar/Search';
 const Search = React.lazy(() => import('./Comp/SideBar/Search.Container'));
 
@@ -26,67 +25,22 @@ const Register = React.lazy(() => import('./Comp/Register/Register.Container'));
 const Login = React.lazy(() => import('./Comp/Login/Login.Container'));
 
 // import MiniCartList from './Comp/Cart/MiniCartList';
-const MiniCartList = React.lazy(() => import('./Comp/Cart/MiniCartList'));
+const MiniCartList = React.lazy(() => import('./Comp/Cart/MiniCartList.Container'));
 // import Cart from './Comp/Cart/Cart';
-const Cart = React.lazy(() => import('./Comp/Cart/Cart'));
+const Cart = React.lazy(() => import('./Comp/Cart/Cart.Container'));
 
 // import NotFound from './Comp/NotFound/NotFound';
 const NotFound = React.lazy(() => import('./Comp/NotFound/NotFound'));
 
 function Main() {
 
-    const [addedProduct, setAddedProduct] = useState([]);
-    const [productList, setProductList] = useState(datajson.data)
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalProduct, setTotalProduct] = useState(0);
-
-    const onClickCartList = (product) => {
-        setAddedProduct([...addedProduct, product]);
-
-        setTotalPrice(totalPrice + product.final_price);
-
-        setTotalProduct(totalProduct + 1);
-    }
-
-    const sortClick = (type) => {
-        const products = [...datajson.data];
-
-        switch (type) {
-            case 'sortaz':
-                setProductList(products.sort((a, b) => a.final_price - b.final_price));
-                break;
-            case 'sortza':
-                setProductList(products.sort((a, b) => b.final_price - a.final_price));
-                break;
-            case 'sortnameaz':
-                setProductList(products.sort((a, b) => {
-                    var textA = a.name.toUpperCase();
-                    var textB = b.name.toUpperCase();
-                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                }))
-                break;
-            case 'sortnameza':
-                setProductList(products.sort((a, b) => {
-                    var textA = a.name.toUpperCase();
-                    var textB = b.name.toUpperCase();
-                    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
-                }))
-                break;
-            case 'filtersale':
-                setProductList(products.filter(ele => ele.promotion_percent >= 30))
-                break;
-            default:
-                break;
-        }
-    }
-
     return (
 
         <Router>
             <React.Fragment>
                 <React.Suspense fallback={<LoadingComp />}>
-                    <Header totalProduct={totalProduct}>
-                        <MiniCartList products={addedProduct} totalPrice={totalPrice} />
+                    <Header>
+                        <MiniCartList />
                     </Header>
 
                     <Switch>
@@ -99,11 +53,8 @@ function Main() {
 
                         <Route path="/" exact component={Layout}>
                             <Layout>
-                                {/* chua co redux */}
-                                {/* <ProductList list={productList} onClickCart={onClickCartList}></ProductList> */}
-                                {/* co redux */}
-                                <ProductList onClickCart={onClickCartList}></ProductList>
-                                <SideBar onSortClick={sortClick}>
+                                <ProductList></ProductList>
+                                <SideBar>
                                     <Search />
                                 </SideBar>
                             </Layout>

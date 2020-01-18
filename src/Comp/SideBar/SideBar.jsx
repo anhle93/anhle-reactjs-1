@@ -1,9 +1,6 @@
 import React from 'react';
 
-function SideBar(props, { onSortClick, onFilterData }) {
-    const sortHandle = (sortType) => {
-        props.onSortClick(sortType);
-    }
+function SideBar(props) {
 
     return (
         <div className="col-xl-3 col-lg-4">
@@ -15,17 +12,14 @@ function SideBar(props, { onSortClick, onFilterData }) {
                 
                 <div className="shop-widget">
                     <h3 className="shop-title">SHOP BY</h3>
-                    <ul className="shop-link">
-                        <li><a onClick={() => sortHandle('sortnameaz')} href="/">Name: A-Z</a></li>
-                        <li><a onClick={() => sortHandle('sortnameza')} href="/">Name: Z-A</a></li>
-                        <li><a onClick={() => sortHandle('sortaz')} href="/">Price: High to Low</a></li>
-                        <li><a onClick={() => sortHandle('sortza')} href="/">Price: Low to High</a></li>
-                        <li><a onClick={() => sortHandle('filtersale')} href="/">Product: Top Sales</a></li>
+                    <ul className="shop-link">  
+                        <li><a onClick={(e) => { props.sortProducts(props.filteredProducts, "sortnameaz") }}>Name: A-Z</a></li>
+                        <li><a onClick={(e) => { props.sortProducts(props.filteredProducts, "sortnameza") }}>Name: Z-A</a></li>
+                        <li><a onClick={(e) => { props.sortProducts(props.filteredProducts, "sortaz") }}>Price: High to Low</a></li>
+                        <li><a onClick={(e) => { props.sortProducts(props.filteredProducts, "sortza") }}>Price: Low to High</a></li>
+                        <li><a onClick={(e)=>{props.filterProducts(props.products, 30)}}>Product: Top Sales</a></li>
+                        
                     </ul>
-                    {/* <ul className="shop-link">
-                        <li><a onClick={() => sortHandle('filtersale')} href="#">Product: Top Sales 1</a></li>
-                        <li><a onClick={() => props.filterProducts(props.products, 25)} href="#">Product: Top Sales</a></li>
-                    </ul> */}
                 </div>
                 <div className="shop-widget">
                     <h3 className="shop-title">Recent Product</h3>

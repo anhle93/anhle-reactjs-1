@@ -24,8 +24,8 @@ export default function PrivateRoute({
 
     return (
         <Route {...restProps}>
-            {/* {renChildren} */}
-            {children}
+            {renChildren}
+            {/* {children} */}
         </Route>
     );
 }

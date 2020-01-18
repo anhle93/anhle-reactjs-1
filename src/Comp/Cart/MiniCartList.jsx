@@ -1,30 +1,33 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export function MiniCartList(props) {
+    
     return (
         <ul className="minicart">
             {
-                props.products.map(elm => {
+                props.cartItems.map(elm => {
                     return (
                         <li key={elm.name}>
                             <div className="cart-img">
-                                <a href="/">
+                                {/* <a href="/"> */}
                                     <img src={elm.img_url} alt="" />
-                                </a>
+                                {/* </a> */}
                             </div>
                             <div className="cart-content">
                                 <h3>
-                                    <a href="/">{elm.name}</a>
+                                    <Link to={`/product-detail/${elm.product_id}`}>{elm.name}</Link>
                                 </h3>
                                 <div className="cart-price">
-                                    <span className="new">$ {elm.final_price}</span>
+                                    <span className="new">{elm.count} x {new Intl.NumberFormat('de-DE').format(elm.final_price)}đ</span>
+                                    <span> - </span>
                                     <span>
-                                        <del>${elm.price}</del>
+                                        <del>{new Intl.NumberFormat('de-DE').format(elm.price)}đ</del>
                                     </span>
                                 </div>
                             </div>
                             <div className="del-icon">
-                                <a href="/">
+                                <a onClick={() => props.removeFromCart(props.cartItems, elm)}>
                                     <i className="far fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -34,14 +37,15 @@ export function MiniCartList(props) {
             }
             <li>
                 <div className="total-price">
-                    <span className="f-left">Total:</span>
-                    <span className="f-right">{props.totalPrice}</span>
+                    <span className="f-left">Total: {props.cartItems.length}</span>
+                    <span className="f-right">Total price: {new Intl.NumberFormat('de-DE').format(props.cartItems.reduce((a, c) => (a + c.final_price * c.count), 0))}đ</span>
                 </div>
             </li>
             <li>
                 <div className="checkout-link">
-                    <a href="/">Shopping Cart</a>
-                    <a className="red-color" href="/">Checkout</a>
+                    <Link to="/cart">Shopping Cart</Link>
+                    {/* <a href="/">Shopping Cart</a> */}
+                    {/* <a className="red-color" href="/">Checkout</a> */}
                 </div>
             </li>
         </ul>

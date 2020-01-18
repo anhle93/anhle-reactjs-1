@@ -1,15 +1,18 @@
 import { connect } from 'react-redux';
-import { filterProducts } from '../ProductList/ProductList.action';
+import { filterProducts, sortProducts } from '../ProductList/ProductList.action';
 import SideBar from './SideBar';
 
 const mapStateToProps = (store) => ({
     load: store.productListReducer.load,
     products: store.productListReducer.data,
-    sale: store.productListReducer.sale
+    filteredProducts: store.productListReducer.filteredItems,
+    sale: store.productListReducer.sale,
+    type: store.productListReducer.type,
 })
 
 const mapDispatchToProps = {
-    filterProducts
+    filterProducts,
+    sortProducts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar)
